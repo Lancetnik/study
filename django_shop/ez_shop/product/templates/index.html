@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Best proj</title>
+
+    <!-- Подключаем Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!-- MD icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <!-- Vuetify css -->
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-app-bar color="deep-purple accent-4" dense dark app>
+                <v-toolbar-title>Simple shop</v-toolbar-title>
+            </v-app-bar>
+
+            <v-main>
+                <v-container>
+                    <v-row justify='center'>
+                        <v-col cols='6'>
+                            <v-card v-for="(product, i) in products" :key="i" class="my-3">
+                                <v-card-title v-text="product.name"></v-card-title>
+                                <v-card-text>
+                                    <v-row>
+                                        <v-col cols='8'>
+                                            [[ product.description ]]
+                                        </v-col>
+                                        <v-col v-for="(img, i) in product.images" :key='i'>
+                                            <v-img :src="img.file" max-height="150" max-width="250">
+                                            </v-img>
+                                        </v-col>
+                                    </v-row>
+                                </v-card-text>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-main>
+
+            <v-footer dark padless>
+                <v-card color='deep-purple accent-4' class="flex" flat tile>
+                    <v-card-text class="py-2 white--text text-center">
+                        [[ new Date().getFullYear() ]] — <strong>MozhaykaTEAM</strong>
+                    </v-card-text>
+                </v-card>
+            </v-footer>
+        </v-app>
+    </div>
+</body>
+
+
+<!-- Подключаем ajax-запросы axios -->
+<script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+<!-- Vue 2 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<!-- Vuetify -->
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+    Vue.options.delimiters = ['[[', ']]'];
+
+    let app = new Vue({
+        el: '#app',
+
+        vuetify: new Vuetify(),
+
+        data: {
+            products: []
+        },
+
+        methods: {
+
+        },
+
+        created() {
+            axios.get('http://127.0.0.1:8000/product/')
+                .then((r) => {
+                    this.products = r.data
+                    console.log(this.products)
+                })
+        }
+    })
+</script>
+
+</html>
