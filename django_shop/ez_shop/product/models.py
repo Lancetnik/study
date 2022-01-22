@@ -64,7 +64,8 @@ class Product(models.Model):
     )
 
     buskets = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through='ProductInBusket',
+        settings.AUTH_USER_MODEL,
+        through='ProductInBusket',
         related_name='busket'
     )
 
