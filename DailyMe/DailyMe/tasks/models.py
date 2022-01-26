@@ -4,14 +4,21 @@ from django.db import models
 
 class Task(models.Model):
     text = models.TextField()
-    onwer = models.ForeignKey(
+    owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='notes'
     )
 
     def __str__(self):
-        return f'{self.onwer}: {self.text}'
+        return f'{self.owner}: {self.text}'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'owner': str(self.owner),
+            'text': self.text
+        }
 
     class Meta:
         verbose_name = 'Задача'
