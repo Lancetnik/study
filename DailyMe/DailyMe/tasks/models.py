@@ -13,23 +13,17 @@ class Task(models.Model):
     def __str__(self):
         return f'{self.owner}: {self.text}'
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'owner': str(self.owner),
-            'text': self.text
-        }
-
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
+        unique_together=(('owner', 'text'),)
 
 
-class TaskCategory(models.Model):
+class TaskToDo(models.Model):
     task = models.ForeignKey(
         Task, 
         on_delete=models.CASCADE,
-        related_name='category'
+        related_name='to_do'
     )
 
     start_date = models.DateTimeField()
@@ -59,17 +53,17 @@ class TaskCategory(models.Model):
         ]
 
 
-class RegularTask(models.Model):
+class PeriodicTask(models.Model):
     task = models.ForeignKey(
         Task, 
         on_delete=models.CASCADE,
-        related_name='regular'
+        related_name='periodic'
     )
     cron_format = models.TextField()
 
     def __str__(self):
-        return f'Регулярная - {self.task}'
+        return f'Периодическая - {self.task}'
 
     class Meta:
-        verbose_name = 'Регулярная задача'
-        verbose_name_plural = 'Регулярные задачи'
+        verbose_name = 'Периодическая задача'
+        verbose_name_plural = 'Периодические задачи'

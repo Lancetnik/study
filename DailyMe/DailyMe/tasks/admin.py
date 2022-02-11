@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Task, RegularTask, TaskCategory
+from .models import Task, TaskToDo, PeriodicTask
 
 
 admin.site.register(Task)
-admin.site.register(TaskCategory)
-admin.site.register(RegularTask)
+admin.site.register(TaskToDo)
+admin.site.register(PeriodicTask)
